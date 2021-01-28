@@ -16,8 +16,9 @@ public class NewOrderMain {
                     var order = new Order(userId, orderId, amount);
                     orderDispatcher.send("ECOMMERCE_NEW_ORDER", userId, order);
 
-                    var email = "Welcome! Thank you for your order! We are processing your order!";
-                    emailDispatcher.send("ECOMMERCE_SEND_EMAIL", userId, email);
+                    var emailBody = "Welcome! Thank you for your order! We are processing your order!";
+                    var email = new Email("Subject", emailBody);
+                    emailDispatcher.send("ECOMMERCE_SEND_EMAIL", userId, emailBody);
                 }
             }
         }
