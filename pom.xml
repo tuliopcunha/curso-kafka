@@ -6,6 +6,7 @@
 
     <groupId>br.com.alura</groupId>
     <artifactId>ecommerce</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -19,6 +20,13 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>serviceemail</module>
+        <module>servicefrauddetector</module>
+        <module>servicelog</module>
+        <module>serviceneworder</module>
+        <module>commonkafka</module>
+    </modules>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
