@@ -27,6 +27,7 @@
         <module>serviceneworder</module>
         <module>commonkafka</module>
         <module>serviceusers</module>
+        <module>servicehttp</module>
     </modules>
 
     <dependencies>
