@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class CreateUserService {
@@ -14,9 +15,15 @@ public class CreateUserService {
 
     CreateUserService() throws SQLException {
         this.connection = DriverManager.getConnection("jdbc:sqlite:users_database.db");
-        this.connection.createStatement().execute("create table Users (" +
-                "uuid varchar(200) primary key," +
-                "email varchar(200))");
+        try {
+            this.connection.createStatement().execute("create table Users (" +
+                    "uuid varchar(200) primary key," +
+                    "email varchar(200))");
+        }catch (SQLException e){
+            //be careful, the sql could be wrong, be really careful
+            e.printStackTrace();
+        }
+
     }
 
     public static void main(String[] args) throws SQLException {
@@ -38,16 +45,17 @@ public class CreateUserService {
     }
 
     private void insertNewUser(String email) throws SQLException {
-        var insert = connection.prepareStatement("insert into Users (uui, email) " +
+        var insert = connection.prepareStatement("insert into Users (uuid, email) " +
                 "values (?,?)");
-        insert.setString(1, "uui");
+        var uuid = UUID.randomUUID().toString();
+        insert.setString(1, uuid);
         insert.setString(2, email);
         insert.execute();
-        System.out.println("User uui");
+        System.out.println("User uuid: " + uuid + " Email: " + email + " inserting");
     }
 
     private boolean isNewUser(String email) throws SQLException {
-        var exists = connection.prepareStatement("select uui from Users where email = ? limit 1");
+        var exists = connection.prepareStatement("select uuid from Users where email = ? limit 1");
         exists.setString(1, email);
         var results = exists.executeQuery();
         return !results.next();
