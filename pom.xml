@@ -28,6 +28,7 @@
         <module>commonkafka</module>
         <module>serviceusers</module>
         <module>servicehttp</module>
+        <module>servicereadingreport</module>
     </modules>
 
     <dependencies>
