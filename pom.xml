@@ -30,6 +30,7 @@
         <module>servicehttp</module>
         <module>servicereadingreport</module>
         <module>serviceemailneworder</module>
+        <module>commondatabase</module>
     </modules>
 
     <dependencies>

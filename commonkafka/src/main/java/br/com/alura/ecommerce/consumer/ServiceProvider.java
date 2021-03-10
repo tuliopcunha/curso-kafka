@@ -1,6 +1,4 @@
-package br.com.alura.ecommerce;
-
-import br.com.alura.ecommerce.consumer.KafkaService;
+package br.com.alura.ecommerce.consumer;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -15,9 +13,9 @@ public class ServiceProvider<T> implements Callable<Void> {
         this.factory = factory;
     }
 
-    public Void call() throws ExecutionException, InterruptedException {
+    public Void call() throws Exception {
         var myService = factory.create();
-        try(var service = new KafkaService(myService.getConsumerGroup(), myService.getTopic(),
+        try(var service = new KafkaService<>(myService.getConsumerGroup(), myService.getTopic(),
                 myService::parse, Map.of())){
             service.run();
         }
