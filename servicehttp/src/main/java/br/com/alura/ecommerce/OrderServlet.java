@@ -14,15 +14,12 @@ import java.util.concurrent.ExecutionException;
 
 public class OrderServlet extends HttpServlet {
 
-
     private final KafkaDispatcher<Order> orderDispatcher = new KafkaDispatcher<>();
-    private final KafkaDispatcher<String> emailDispatcher = new KafkaDispatcher<>();
 
     @Override
     public void destroy() {
         super.destroy();
         orderDispatcher.close();
-        emailDispatcher.close();
     }
 
     @Override
@@ -41,9 +38,6 @@ public class OrderServlet extends HttpServlet {
 
             var order = new Order(orderId, amount, email);
             orderDispatcher.send("ECOMMERCE_NEW_ORDER", email, new CorrelationId(OrderServlet.class.getSimpleName()), order);
-
-            var emailBody = "Welcome! Thank you for your order! We are processing your order!";
-            emailDispatcher.send("ECOMMERCE_SEND_EMAIL", email, new CorrelationId(OrderServlet.class.getSimpleName()), emailBody);
 
             System.out.println("New order send successfully");
             resp.setStatus(HttpServletResponse.SC_OK);

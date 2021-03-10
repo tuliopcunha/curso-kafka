@@ -29,6 +29,7 @@
         <module>serviceusers</module>
         <module>servicehttp</module>
         <module>servicereadingreport</module>
+        <module>serviceemailneworder</module>
     </modules>
 
     <dependencies>
